@@ -13,9 +13,9 @@ import PasswordIcon from '@mui/icons-material/Password'
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
 import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
-import SettingsContent from '../settingsContent/SettingsContent'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 import { FileExcelOutlined } from '@ant-design/icons'
+import SettingsContent from '../settingsContent/SettingsContent'
 
 const SettingsSideMenu = (props) => {
   const { collapseSidebar } = useProSidebar()
