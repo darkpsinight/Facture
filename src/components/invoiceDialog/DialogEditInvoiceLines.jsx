@@ -30,10 +30,10 @@ import { Card, Form, InputGroup } from 'react-bootstrap'
 export default function DialogEditInvoice(props) {
   const [id, setId] = useState('')
   const [ViewEdit, setEditShow] = useState(false)
-  const [code, setCode] = useState('')
-  const [article, setArticle] = useState('')
-  const [price, setPrice] = useState(null)
-  const [vat, setVat] = useState(null)
+  const [code] = useState(props.arraySelectedArticles[0].article_code)
+  const [article, setArticle] = useState(props.arraySelectedArticles[0].article_name)
+  const [price, setPrice] = useState(props.arraySelectedArticles[0].article_price)
+  const [vat, setVat] = useState(props.arraySelectedArticles[0].invoice_line_vat)
   const [vatselect, setVatSelect] = useState([])
   const [articleData, setArticleData] = useState([])
   let [totalPrice, setTotal] = useState(0)
@@ -46,19 +46,6 @@ export default function DialogEditInvoice(props) {
     vat: Number(v.vat),
     status: Number(v.status),
   })
-
-  useEffect(() => {
-    setCode(articleData.code)
-    setArticle(articleData.article)
-    setPrice(articleData.price)
-    setVat(articleData.vat?.id)
-  }, [
-    articleData?.code,
-    articleData?.article,
-    articleData?.price,
-    articleData?.vat,
-    articleData?.status,
-  ])
 
   useEffect(() => {
     const loadvatsdetails = async () => {
@@ -136,6 +123,8 @@ export default function DialogEditInvoice(props) {
   const handleFocus = (event) => event.target.select()
 
   /* Discount on total */
+
+  // eslint-disable-next-line
   const [discountOnTotal, setDiscountOnTotal] = useState(0)
 
   useEffect(() => {
@@ -143,17 +132,23 @@ export default function DialogEditInvoice(props) {
     setDiscountOnTotal((Math.round(x * 100) / 100).toFixed(3))
   }, [totalPrice, discount])
 
-  /* total */
-  const [total, setHT] = useState(0)
+  /* total ( = HT) */
+  const [total, setHT] = useState(props.arraySelectedArticles[0].total)
+  console.log('total', total)
 
   useEffect(() => {
     let x = price * props.num * (1 - discount / 100)
+    // console.log('price: ', price)
+    // console.log('discount: ', discount)
+    // console.log('x: ', x)
     let y = (Math.round(x * 100) / 100).toFixed(3)
+    // console.log('y: ', y)
     props.setArraySelectedArticles(
       props.arraySelectedArticles.map((item) =>
         item.id === props.data ? { ...item, total: Number(y) } : item,
       ),
     )
+    console.log('props total: ', total)
     // eslint-disable-next-line
   }, [price, props.num, discount])
 
@@ -164,14 +159,22 @@ export default function DialogEditInvoice(props) {
   }, [price, props.num, discount])
 
   /* TTC */
-  const [TTC, setTTC] = useState(0)
+  const [TTC, setTTC] = useState(props.arraySelectedArticles[0].TTC)
 
   useEffect(() => {
     let x = price * props.num * (1 - discount / 100)
-    let y = x * (1 + Number(articleData?.vat?.vat))
-    let z = (Math.round(y * 100) / 100).toFixed(3)
+    console.log('ttc price: ', price)
+    console.log('ttc props.num: ', props.num)
+    console.log('ttc discount: ', discount)
+    console.log('x: ', x)
+    let y = x * (1 + Number(vat))
+    console.log('1 + Number(vat): ', 1 + Number(vat))
+    console.log('vat: ', vat)
+    console.log('y: ', y)
+    let z = y.toFixed(3)
+    console.log('z: ', z)
     setTTC(z)
-  }, [price, props.num, discount, articleData?.vat?.vat])
+  }, [price, props.num, discount, vat])
 
   useEffect(() => {
     props.setArraySelectedArticles(

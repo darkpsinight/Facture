@@ -31,7 +31,7 @@ export const addInvoice = async (header, lines) => {
 
   return await axios({
     method: 'post',
-    url: 'https://api.factarni.tn/invoice/create',
+    url: `${baseURL}/create`,
     data: bodyFormData,
     headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
   })

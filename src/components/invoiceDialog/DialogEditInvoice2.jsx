@@ -31,7 +31,7 @@ import { Typeahead, Highlighter, Menu, MenuItem } from 'react-bootstrap-typeahea
 import { Form, InputGroup } from 'react-bootstrap'
 import 'react-bootstrap-typeahead/css/Typeahead.css'
 import _ from 'lodash'
-import DialogEditInvoice from 'src/components/invoiceDialog/DialogEditInvoice'
+import DialogEditInvoiceLines from 'src/components/invoiceDialog/DialogEditInvoiceLines'
 import { addInvoice, getHydratedInvoice } from 'src/Service/apiInvoice'
 import EditIcon from '@mui/icons-material/Edit'
 import Button from 'react-bootstrap/Button'
@@ -236,7 +236,7 @@ const DialogEditInvoice2 = (props) => {
   useEffect(() => {
     let x = 0
     for (let index = 0; index < arraySelectedArticles.length; index++) {
-      // console.log(arraySelectedArticles[index].total)
+      console.log('total_ht: ', arraySelectedArticles[index].total)
       x = x + arraySelectedArticles[index].total
     }
     setTotal_ht(x)
@@ -248,7 +248,7 @@ const DialogEditInvoice2 = (props) => {
   useEffect(() => {
     let x = 0
     for (let index = 0; index < arraySelectedArticles.length; index++) {
-      console.log(arraySelectedArticles[index].TTC)
+      console.log('total_price: ', arraySelectedArticles[index].TTC)
       x = x + arraySelectedArticles[index].TTC
     }
     setTotal_price(x)
@@ -290,7 +290,7 @@ const DialogEditInvoice2 = (props) => {
   useEffect(() => {
     ;(async () => {
       const response = await getHydratedInvoice(selectedInvoiceId)
-      console.log('response: ', response)
+      console.log('response HydratedInvoice API: ', response)
       setDate(response.header.date)
       setClientName(response.header.client.name)
       console.log('response.lines: ', response.lines)
@@ -332,13 +332,7 @@ const DialogEditInvoice2 = (props) => {
             <EditIcon />
           )}
         </Button>
-        <CModal
-          visible={visible}
-          size="lg"
-          backdrop={'static'}
-          scrollable
-          onClose={() => setVisible(false)}
-        >
+        <CModal visible={visible} backdrop={'static'} scrollable onClose={() => setVisible(false)}>
           <CModalHeader onClose={() => setVisible(false)}>
             <CModalTitle>Edit invoice</CModalTitle>
           </CModalHeader>
@@ -401,21 +395,19 @@ const DialogEditInvoice2 = (props) => {
                 <InputGroup>
                   <InputGroup.Text>Article: </InputGroup.Text>
                   <Typeahead
-                    style={{ width: 'auto' }}
                     clearButton
-                    id="grouped-results"
-                    options={mapOptions(articles, arraySelectedArticles)}
-                    placeholder="Choose an article..."
-                    renderMenu={renderMenu}
+                    id="basic-example"
                     onChange={(newValue) => {
                       if (newValue.length !== 0) {
+                        console.log('newValue: ', newValue)
                         setArraySelectedArticles([
                           ...arraySelectedArticles,
                           {
                             ...newValue[0],
+                            article_code: newValue[0].code,
+                            article_name: newValue[0].label,
+                            article_price: newValue[0].price,
                             quantity: 1,
-                            article: newValue[0].label,
-                            article_id: newValue[0].id,
                             discount: 0,
                           },
                         ])
@@ -423,6 +415,9 @@ const DialogEditInvoice2 = (props) => {
                         // setArraySelectedArticles(responseAPILines)
                       }
                     }}
+                    options={mapOptions(articles, arraySelectedArticles)}
+                    placeholder="Add new article ..."
+                    labelKey={(articles) => articles.label}
                   />
                 </InputGroup>
               </Form.Group>
@@ -470,12 +465,19 @@ const DialogEditInvoice2 = (props) => {
                       <td>{article.article_price}</td>
                       <td>{Math.trunc(article.quantity)}</td>
                       <td style={{ display: 'flex', justifyContent: 'space-around' }}>
-                        <DialogEditInvoice
+                        <DialogEditInvoiceLines
                           data={article.id}
                           num={article.quantity}
                           setArraySelectedArticles={setArraySelectedArticles}
                           arraySelectedArticles={arraySelectedArticles}
                         />
+                        <button
+                          onClick={() => {
+                            console.log(article.id)
+                          }}
+                        >
+                          article.id
+                        </button>
                         <IconButton
                           style={{
                             border: '1px',

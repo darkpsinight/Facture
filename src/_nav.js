@@ -8,6 +8,8 @@ import PercentIcon from '@mui/icons-material/Percent'
 import CurrencyExchangeTwoToneIcon from '@mui/icons-material/CurrencyExchangeTwoTone'
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
 import LoginIcon from '@mui/icons-material/Login'
+import SettingsIcon from '@mui/icons-material/Settings'
+import BarChartIcon from '@mui/icons-material/BarChart'
 
 const _nav = [
   {
@@ -45,6 +47,18 @@ const _nav = [
     name: 'Factures',
     to: '/factures',
     icon: <RequestQuoteIcon style={{ marginRight: 20, marginLeft: 5 }} />,
+  },
+  {
+    component: CNavItem,
+    name: 'Sales',
+    to: '/sales',
+    icon: <BarChartIcon style={{ marginRight: 20, marginLeft: 5 }} />,
+  },
+  {
+    component: CNavItem,
+    name: 'Settings',
+    to: '/settings',
+    icon: <SettingsIcon style={{ marginRight: 20, marginLeft: 5 }} />,
   },
   {
     component: CNavTitle,

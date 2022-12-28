@@ -53,11 +53,11 @@ export default function DialogEditInvoice(props) {
     setPrice(articleData.price)
     setVat(articleData.vat?.id)
   }, [
-    articleData?.code,
-    articleData?.article,
-    articleData?.price,
-    articleData?.vat,
-    articleData?.status,
+    articleData.code,
+    articleData.article,
+    articleData.price,
+    articleData.vat,
+    articleData.status,
   ])
 
   useEffect(() => {
@@ -168,10 +168,10 @@ export default function DialogEditInvoice(props) {
 
   useEffect(() => {
     let x = price * props.num * (1 - discount / 100)
-    let y = x * (1 + Number(articleData?.vat?.vat))
+    let y = x * (1 + Number(articleData.vat?.vat))
     let z = (Math.round(y * 100) / 100).toFixed(3)
     setTTC(z)
-  }, [price, props.num, discount, articleData?.vat?.vat])
+  }, [price, props.num, discount, articleData.vat?.vat])
 
   useEffect(() => {
     props.setArraySelectedArticles(
@@ -191,7 +191,7 @@ export default function DialogEditInvoice(props) {
           height: '50px',
           width: '50px',
         }}
-        onClick={() => handleEditShow(setId(props.data?.id))}
+        onClick={() => handleEditShow(setId(props.data.id))}
       >
         <EditIcon style={{ color: '#24d12c' }} />
       </IconButton>
@@ -205,13 +205,7 @@ export default function DialogEditInvoice(props) {
       >
         <CModalHeader>
           <CModalTitle>Edit Article:</CModalTitle>
-          <button
-            onClick={() =>
-              console.log('props.arraySelectedArticles: ', props.arraySelectedArticles)
-            }
-          >
-            props.arraySelectedArticles
-          </button>
+          <button onClick={() => console.log(props.arraySelectedArticles)}>aaa</button>
         </CModalHeader>
         <CModalBody>
           <CForm style={{ textAlign: 'left' }}>
@@ -221,7 +215,8 @@ export default function DialogEditInvoice(props) {
                 id="exampleFormControlInput0"
                 name="code"
                 type="number"
-                defaultValue={props.arraySelectedArticles[0]?.article_code}
+                defaultValue={articleData.code}
+                disabled
               />
             </InputGroup>
             <InputGroup className="mb-3 mt-2">
@@ -232,7 +227,7 @@ export default function DialogEditInvoice(props) {
                 type="text"
                 placeholder="Enter Article..."
                 onChange={(e) => setArticle(e.target.value)}
-                defaultValue={props.arraySelectedArticles[0]?.article_name}
+                defaultValue={articleData.article}
               />
             </InputGroup>
             <InputGroup className="mb-3 mt-2">
@@ -245,7 +240,7 @@ export default function DialogEditInvoice(props) {
                 max="100"
                 placeholder="Enter Price ..."
                 onChange={(e) => setPrice(e.target.value)}
-                defaultValue={props.arraySelectedArticles[0]?.article_price}
+                defaultValue={articleData.price}
               />
             </InputGroup>
             <div
@@ -282,7 +277,7 @@ export default function DialogEditInvoice(props) {
                       fontSize: '20px',
                       fontWeight: '600',
                     }}
-                    value={Number(Math.trunc(props.arraySelectedArticles[0]?.quantity))}
+                    value={props.num}
                     onChange={maxPercent}
                     onFocus={handleFocus}
                   />
@@ -307,7 +302,7 @@ export default function DialogEditInvoice(props) {
                 }}
                 aria-label="vat select"
                 name="vat"
-                value={props.arraySelectedArticles[0]?.article_vat}
+                value={vat}
               >
                 <option disabled value={''}>
                   -- select an option --
@@ -327,7 +322,7 @@ export default function DialogEditInvoice(props) {
                   name="DiscountPercent"
                   type="number"
                   placeholder="Enter Discount rate"
-                  value={props.arraySelectedArticles[0]?.discount * 100}
+                  value={discount}
                   onChange={handleChangee}
                   onFocus={handleFocus}
                 />
@@ -343,11 +338,7 @@ export default function DialogEditInvoice(props) {
                   type="number"
                   placeholder="Enter Discount on total"
                   aria-describedby="exampleFormControlInputHelpInline"
-                  value={
-                    props.arraySelectedArticles[0]?.article_price *
-                    props.arraySelectedArticles[0]?.quantity *
-                    props.arraySelectedArticles[0]?.discount
-                  }
+                  value={discountOnTotal}
                 />
                 <InputGroup.Text>DT</InputGroup.Text>
               </InputGroup>

@@ -1,7 +1,11 @@
 import React from 'react'
 
 const Cards = () => {
-  return <>Devis - cards.js</>
+  return (
+    <>
+      <span>Devis - cards.js</span>
+    </>
+  )
 }
 
 export default Cards
