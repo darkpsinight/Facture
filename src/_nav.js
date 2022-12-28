@@ -79,13 +79,13 @@ const _nav = [
           {
             component: CNavItem,
             name: 'Invoice preference',
-            to: '/settings',
+            to: '/settings/invoicePreference',
             icon: <AppSettingsAltIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },
           {
             component: CNavItem,
             name: 'Export Excel',
-            to: '/settings',
+            to: '/settings/exportExcel',
             icon: (
               <FileExcelOutlined style={{ marginRight: 10, marginLeft: -10, fontSize: '22px' }} />
             ),
@@ -100,25 +100,25 @@ const _nav = [
           {
             component: CNavItem,
             name: 'Company Details',
-            to: '/settings',
+            to: '/settings/companyDetails',
             icon: <ApartmentRoundedIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },
           {
             component: CNavItem,
             name: 'Account Informations',
-            to: '/settings',
+            to: '/settings/accountinformations',
             icon: <ManageAccountsOutlinedIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },
           {
             component: CNavItem,
             name: 'Password & Security',
-            to: '/settings',
+            to: '/settings/passwordandsecurity',
             icon: <PasswordIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },
           {
             component: CNavItem,
             name: 'Delete Account',
-            to: '/settings',
+            to: '/settings/deleteaccount',
             icon: <DeleteForeverOutlinedIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },
         ],
@@ -131,7 +131,7 @@ const _nav = [
           {
             component: CNavItem,
             name: 'Display Settings',
-            to: '/settings',
+            to: '/settings/displaysettings',
             icon: <DisplaySettingsIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },
         ],
@@ -144,7 +144,7 @@ const _nav = [
           {
             component: CNavItem,
             name: 'Contact Us',
-            to: '/settings',
+            to: '/settings/contactus',
             icon: <EmailOutlinedIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },
         ],

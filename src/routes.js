@@ -11,6 +11,30 @@ const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumb
 const Cards = React.lazy(() => import('./views/base/cards/Cards'))
 const Carousels = React.lazy(() => import('./views/base/carousels/Carousels'))
 const Settings = React.lazy(() => import('./views/settings/Settings'))
+const InvoiceSettings = React.lazy(() =>
+  import('./views/settings/settingsContent/InvoiceSettings/InvoiceSettings.jsx'),
+)
+const ExportExcel = React.lazy(() =>
+  import('./views/settings/settingsContent/ExportExcelSettings/ExportExcelSettings'),
+)
+const CompanyDetails = React.lazy(() =>
+  import('./views/settings/settingsContent/CompanyDetailsSettings/CompanyDetailsSettings'),
+)
+const AccountInformations = React.lazy(() =>
+  import('./views/settings/settingsContent/AccountInformationSettings/AccountInformationSettings'),
+)
+const PasswordAndSecurity = React.lazy(() =>
+  import('./views/settings/settingsContent/PasswordSettings/PasswordSettings'),
+)
+const DeleteAccount = React.lazy(() =>
+  import('./views/settings/settingsContent/DeleteAccountSettings/DeleteAccountSettings'),
+)
+const DisplaySettings = React.lazy(() =>
+  import('./views/settings/settingsContent/DisplaySettingSettings/DisplaySettingSettings'),
+)
+const ContactUs = React.lazy(() =>
+  import('./views/settings/settingsContent/ContactUsSettings/ContactUsSettings'),
+)
 const Sales = React.lazy(() => import('./views/sales/sales'))
 const Navs = React.lazy(() => import('./views/base/navs/Navs'))
 const Paginations = React.lazy(() => import('./views/base/paginations/Paginations'))
@@ -64,6 +88,22 @@ const routes = [
   { path: '/devis', name: 'Devis', element: Cards },
   { path: '/base/carousels', name: 'Carousel', element: Carousels },
   { path: '/settings', name: 'Settings', element: Settings },
+  { path: '/settings/invoicePreference', name: 'Invoice Preference', element: InvoiceSettings },
+  { path: '/settings/exportExcel', name: 'Export Excel', element: ExportExcel },
+  { path: '/settings/companyDetails', name: 'Company Details', element: CompanyDetails },
+  {
+    path: '/settings/accountinformations',
+    name: 'Account Informations',
+    element: AccountInformations,
+  },
+  {
+    path: '/settings/passwordandsecurity',
+    name: 'Password And Security',
+    element: PasswordAndSecurity,
+  },
+  { path: '/settings/deleteaccount', name: 'Delete Account', element: DeleteAccount },
+  { path: '/settings/displaysettings', name: 'Display Settings', element: DisplaySettings },
+  { path: '/settings/contactus', name: 'Contact Us', element: ContactUs },
   { path: '/sales', name: 'Sales', element: Sales },
   { path: '/base/navs', name: 'Navs', element: Navs },
   { path: '/base/paginations', name: 'Paginations', element: Paginations },
