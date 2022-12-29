@@ -10,7 +10,6 @@ const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
 const Cards = React.lazy(() => import('./views/base/cards/Cards'))
 const Carousels = React.lazy(() => import('./views/base/carousels/Carousels'))
-const Settings = React.lazy(() => import('./views/settings/Settings'))
 const InvoiceSettings = React.lazy(() =>
   import('./views/settings/settingsContent/InvoiceSettings/InvoiceSettings.jsx'),
 )
@@ -87,7 +86,6 @@ const routes = [
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
   { path: '/devis', name: 'Devis', element: Cards },
   { path: '/base/carousels', name: 'Carousel', element: Carousels },
-  { path: '/settings', name: 'Settings', element: Settings },
   { path: '/settings/invoicePreference', name: 'Invoice Preference', element: InvoiceSettings },
   { path: '/settings/exportExcel', name: 'Export Excel', element: ExportExcel },
   { path: '/settings/companyDetails', name: 'Company Details', element: CompanyDetails },
