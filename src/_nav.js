@@ -78,7 +78,7 @@ const _nav = [
         items: [
           {
             component: CNavItem,
-            name: 'Invoice preference',
+            name: 'Invoice Preference',
             to: '/settings/invoicePreference',
             icon: <AppSettingsAltIcon style={{ marginRight: 10, marginLeft: -10 }} />,
           },

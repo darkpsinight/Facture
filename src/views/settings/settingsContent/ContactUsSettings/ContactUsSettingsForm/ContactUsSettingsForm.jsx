@@ -32,6 +32,8 @@ const schema = yup.object().shape({
 })
 
 const ContactUsSettingsForm = () => {
+  const [selectedFile, setSelectedFile] = useState(false)
+
   /* card */
   const [expanded, setExpanded] = useState(false)
 
@@ -56,7 +58,9 @@ const ContactUsSettingsForm = () => {
     let formData = new FormData()
     formData.append('title', data.title)
     formData.append('message', data.message)
-    formData.append('file', data.file?.[0])
+    if (selectedFile === true) {
+      formData.append('file', data.file?.[0])
+    }
 
     postContactUs(formData)
       .then(function (response) {
@@ -65,6 +69,7 @@ const ContactUsSettingsForm = () => {
           showSuccess()
           reset()
           setExpanded(false)
+          setSelectedFile(false)
         } else {
           console.log('error')
           showError()
@@ -145,7 +150,7 @@ const ContactUsSettingsForm = () => {
                   style={{ border: errors.message ? '1px solid red' : '' }}
                 />
                 <label htmlFor="message" className={classNames({ 'p-error': errors.name })}>
-                  Message
+                  Message<span style={{ color: 'red' }}>*</span>
                 </label>
               </span>
               {getFormErrorMessage('message')}
@@ -163,7 +168,11 @@ const ContactUsSettingsForm = () => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
-                <ContactUsSettingsUpload register={register} />
+                <ContactUsSettingsUpload
+                  register={register}
+                  setSelectedFile={setSelectedFile}
+                  selectedFile={selectedFile}
+                />
               </CardContent>
             </Collapse>
 
