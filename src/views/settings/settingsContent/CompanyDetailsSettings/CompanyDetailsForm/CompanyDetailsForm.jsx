@@ -28,6 +28,7 @@ const CompanyDetailsForm = () => {
   ) : (
     <div>
       <ProgressSpinner />
+      <h2>Loading your data, please wait ...</h2>
     </div>
   )
 }

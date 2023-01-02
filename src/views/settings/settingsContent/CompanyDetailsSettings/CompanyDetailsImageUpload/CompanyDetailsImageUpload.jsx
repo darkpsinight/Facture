@@ -24,7 +24,7 @@ const CompanyDetailsImageUpload = (props) => {
         <h5 className="text-center pt-3">Company Logo</h5>
         <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '10px' }}>
           <Image
-            src={`data:image/jpeg;charset=utf-8;base64,${base64String}`}
+            src={`data:image/*;charset=utf-8;base64,${base64String}`}
             alt="Image"
             width="250"
             preview

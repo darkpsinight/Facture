@@ -271,7 +271,7 @@ const CompanyForm = ({ preloadedValues }) => {
                   <Button
                     type="submit"
                     label="Update company details"
-                    className="mt-2"
+                    className="mt-2 p-button-raised"
                     icon="pi pi-send"
                     iconPos="right"
                   />
@@ -279,9 +279,9 @@ const CompanyForm = ({ preloadedValues }) => {
                   <Button
                     type="submit"
                     disabled
-                    label="Update company details"
-                    className="mt-2"
-                    icon="pi pi-send"
+                    label="You have entred an invalid data. Please fix it"
+                    className=" mt-2 p-button-raised p-button-warning"
+                    icon="pi pi-exclamation-triangle"
                     iconPos="right"
                   />
                 )}
