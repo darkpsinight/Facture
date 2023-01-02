@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
@@ -14,11 +14,27 @@ import 'simplebar/dist/simplebar.min.css'
 
 // sidebar nav config
 import navigation from '../_nav'
+import { useNavigate } from 'react-router-dom'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  //check authentication
+  const [isAuthenticated, setisAuthenticated] = useState(false)
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (localStorage.getItem('accessTokenServer') !== null) {
+      console.log(`Logged in`)
+      setisAuthenticated(true)
+    } else {
+      console.log(`Logged out`)
+      navigate('/login')
+      setisAuthenticated(false)
+    }
+  }, [navigate])
 
   return (
     <CSidebar
@@ -35,7 +51,7 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          <AppSidebarNav items={navigation} />
+          <AppSidebarNav items={navigation(isAuthenticated)} />
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler

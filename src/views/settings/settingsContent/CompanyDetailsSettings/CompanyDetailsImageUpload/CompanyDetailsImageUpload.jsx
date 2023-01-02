@@ -1,41 +1,32 @@
 import React, { useState } from 'react'
-import { Upload } from 'antd'
-import ImgCrop from 'antd-img-crop'
 import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
+import { Form } from 'react-bootstrap'
+import propTypes from 'prop-types'
 
-const CompanyDetailsImageUpload = () => {
-  const [fileList, setFileList] = useState([{}])
+const CompanyDetailsImageUpload = (props) => {
   const [visible, setVisible] = useState(false)
-
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList)
-  }
-  const onPreview = async (file) => {
-    let src = file.url
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(file.originFileObj)
-        reader.onload = () => resolve(reader.result)
-      })
-    }
-    const image = new Image()
-    image.src = src
-    const imgWindow = window.open(src)
-    imgWindow?.document.write(image.outerHTML)
-  }
 
   const onLoadingClick = () => {
     setVisible(!visible)
   }
+
+  const handleFileChange = () => {
+    props.setSelectedFile(!props.selectedFile)
+  }
+
+  console.log('preloadedValues:', props.preloadedValues)
+  const base64String = btoa(
+    String.fromCharCode(...new Uint8Array(props.preloadedValues.logo?.attachment.data)),
+  )
+
   return (
     <>
       <div className="card">
         <h5 className="text-center pt-3">Company Logo</h5>
         <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '10px' }}>
           <Image
-            src="https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?cs=srgb&dl=pexels-pixabay-269077.jpg&fm=jpg"
+            src={`data:image/jpeg;charset=utf-8;base64,${base64String}`}
             alt="Image"
             width="250"
             preview
@@ -55,24 +46,18 @@ const CompanyDetailsImageUpload = () => {
         <div>
           {visible ? (
             <div style={{ margin: '10px' }}>
-              <div style={{ margin: '10px' }}>
-                <span>
-                  Please note that your selected image will be uploaded <b>automatically</b> to our
-                  servers.<span style={{ color: 'red' }}>*</span>
-                </span>
+              <div className="card" style={{ padding: '10px' }}>
+                <Form.Group controlId="formFileLg" className="mb-3">
+                  <Form.Label column="lg" lg={5}>
+                    Upload a Logo
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    {...props.register('file')}
+                    onChange={handleFileChange}
+                  />
+                </Form.Group>
               </div>
-              <ImgCrop rotate>
-                <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture-card"
-                  fileList={fileList}
-                  maxCount={1}
-                  onChange={onChange}
-                  onPreview={onPreview}
-                >
-                  {fileList.length < 2 && '+ Upload'}
-                </Upload>
-              </ImgCrop>
             </div>
           ) : (
             ''
@@ -84,3 +69,10 @@ const CompanyDetailsImageUpload = () => {
 }
 
 export default CompanyDetailsImageUpload
+
+CompanyDetailsImageUpload.propTypes = {
+  register: propTypes.func,
+  selectedFile: propTypes.any,
+  setSelectedFile: propTypes.func,
+  preloadedValues: propTypes.any,
+}

@@ -8,6 +8,7 @@ import PercentIcon from '@mui/icons-material/Percent'
 import CurrencyExchangeTwoToneIcon from '@mui/icons-material/CurrencyExchangeTwoTone'
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
 import LoginIcon from '@mui/icons-material/Login'
+import LogoutIcon from '@mui/icons-material/Logout'
 import SettingsIcon from '@mui/icons-material/Settings'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
@@ -23,7 +24,15 @@ import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 
-const _nav = [
+//logout
+const logout = () => {
+  console.log('hello world')
+  localStorage.removeItem('accessTokenServer')
+  localStorage.removeItem('accessTokenFirebase')
+  window.location.reload()
+}
+
+const _nav = (isAuthenticated) => [
   {
     component: CNavItem,
     name: 'Dashboard',
@@ -157,9 +166,15 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Login',
-    to: '/login',
-    icon: <LoginIcon style={{ marginRight: 20, marginLeft: 5 }} />,
+    name: isAuthenticated ? 'Logout' : 'Login',
+    to: isAuthenticated ? '/login' : '/',
+    icon: isAuthenticated ? (
+      <div id="logout-auth-true" onClick={() => logout()}>
+        <LogoutIcon style={{ marginRight: 20, marginLeft: 5 }} />
+      </div>
+    ) : (
+      <LoginIcon style={{ marginRight: 20, marginLeft: 5 }} />
+    ),
   },
 ]
 

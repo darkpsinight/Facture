@@ -86,8 +86,8 @@ const ContactUsSettingsForm = () => {
   const showError = () => {
     toast.current.show({
       severity: 'error',
-      summary: 'Error Message',
-      detail: 'Message Content',
+      summary: 'Error',
+      detail: 'Sorry, Please reload page or try again later.',
       life: 5000,
     })
   }
