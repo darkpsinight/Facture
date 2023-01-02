@@ -61,6 +61,8 @@ const CompanyForm = ({ preloadedValues }) => {
     return errors[title] && <small className="p-error">{errors[title].message}</small>
   }
 
+  const [visible, setVisible] = useState(false)
+
   const submitForm = (data) => {
     console.log('data: ', data)
     let formData = new FormData()
@@ -80,6 +82,7 @@ const CompanyForm = ({ preloadedValues }) => {
           console.log('Message sent successfully!')
           showSuccess()
           setSelectedFile(false)
+          setVisible(false)
         } else {
           console.log('error')
           showError()
@@ -125,6 +128,8 @@ const CompanyForm = ({ preloadedValues }) => {
               selectedFile={selectedFile}
               setSelectedFile={setSelectedFile}
               preloadedValues={preloadedValues}
+              visible={visible}
+              setVisible={setVisible}
             />
             <div className="card" style={{ padding: '10px' }}>
               <form

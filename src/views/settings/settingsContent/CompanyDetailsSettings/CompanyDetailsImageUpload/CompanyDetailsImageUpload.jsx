@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
 import { Form } from 'react-bootstrap'
 import propTypes from 'prop-types'
 
 const CompanyDetailsImageUpload = (props) => {
-  const [visible, setVisible] = useState(false)
-
   const onLoadingClick = () => {
-    setVisible(!visible)
+    props.setVisible(!props.visible)
   }
 
   const handleFileChange = () => {
@@ -33,18 +31,18 @@ const CompanyDetailsImageUpload = (props) => {
           />
         </div>
         <Button
-          label={!visible ? 'Upload New Logo' : 'Cancel'}
-          icon={!visible ? 'pi pi-upload' : 'pi pi-times'}
+          label={!props.visible ? 'Upload New Logo' : 'Cancel'}
+          icon={!props.visible ? 'pi pi-upload' : 'pi pi-times'}
           iconPos="right"
           onClick={onLoadingClick}
           style={{
             margin: '10px',
             marginBottom: '10px',
-            backgroundColor: visible ? '#d9534f' : '',
+            backgroundColor: props.visible ? '#d9534f' : '',
           }}
         />
         <div>
-          {visible ? (
+          {props.visible ? (
             <div style={{ margin: '10px' }}>
               <div className="card" style={{ padding: '10px' }}>
                 <Form.Group controlId="formFileLg" className="mb-3">
@@ -75,4 +73,6 @@ CompanyDetailsImageUpload.propTypes = {
   selectedFile: propTypes.any,
   setSelectedFile: propTypes.func,
   preloadedValues: propTypes.any,
+  setVisible: propTypes.func,
+  visible: propTypes.any,
 }
