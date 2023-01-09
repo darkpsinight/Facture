@@ -13,6 +13,9 @@ import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import ContactUsSettingsUpload from '../ContactUsSettingsUpload/ContactUsSettingsUpload'
 import { postContactUs } from '../../../../../Service/Settings/apiContactUs'
+import 'primeicons/primeicons.css'
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+import 'primereact/resources/primereact.css'
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props

@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import { getCompanyDetails } from '../../../../../Service/Settings/apiCompanyDetailsSettings'
-import CompanyForm from './CompanyForm'
+import { getAccountDetails } from '../../../../../Service/Settings/apiInvoicePreferenceSettings'
+import InvoiceForm from './InvoiceForm'
 import 'primeicons/primeicons.css'
 import 'primereact/resources/themes/lara-light-indigo/theme.css'
 import 'primereact/resources/primereact.css'
 import './style.css'
 
-const CompanyDetailsForm = () => {
-  /* get company details */
-  const [companyDetails, setCompanyDetails] = useState({})
+const InvoicePreferenceForm = () => {
+  /* get Account details */
+  const [invoicePrefDetails, setInvoicePrefDetails] = useState({})
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    getCompanyDetails().then((response) => setData(response.data.company))
+    getAccountDetails().then((response) => setData(response.data.company))
   }, [])
 
+  console.log('invoicePrefDetails: ', invoicePrefDetails)
+
   useEffect(() => {
-    setCompanyDetails(data)
+    setInvoicePrefDetails(data)
   }, [data])
 
-  return companyDetails ? (
+  return invoicePrefDetails ? (
     <>
       <div className="form-demo">
         <div>
-          <CompanyForm preloadedValues={companyDetails} />
+          <InvoiceForm preloadedValues={invoicePrefDetails} />
         </div>
       </div>
     </>
@@ -36,4 +38,4 @@ const CompanyDetailsForm = () => {
   )
 }
 
-export default CompanyDetailsForm
+export default InvoicePreferenceForm

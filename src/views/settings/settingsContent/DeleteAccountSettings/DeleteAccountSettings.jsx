@@ -6,6 +6,9 @@ import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import { deleteUser } from '../../../../Service/Settings/apiDeleteAccount'
 import 'primeflex/primeflex.css'
+import 'primeicons/primeicons.css'
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+import 'primereact/resources/primereact.css'
 import './style.css'
 
 const DeleteAccountSettings = () => {

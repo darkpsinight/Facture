@@ -126,6 +126,7 @@ const AccountForm = ({ preloadedValues }) => {
                     />
                     <InputText
                       type="text"
+                      disabled
                       maxLength={70}
                       name="login"
                       placeholder=""

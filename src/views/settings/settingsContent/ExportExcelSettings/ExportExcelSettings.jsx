@@ -4,6 +4,9 @@ import { Card, Divider } from 'antd'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import { postExportExcel } from '../../../../Service/Settings/apiExportExcelSettings'
+import 'primeicons/primeicons.css'
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+import 'primereact/resources/primereact.css'
 
 const ExportExcelSettings = () => {
   const [loading1, setLoading1] = useState(false)
