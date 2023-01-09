@@ -5,6 +5,7 @@ import { classNames } from 'primereact/utils'
 import { Divider } from 'antd'
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
+import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup'
 import { Password } from 'primereact/password'
 import {
   onAuthStateChanged,
@@ -67,7 +68,7 @@ const PasswordForm = () => {
           .then(() => {
             updatePassword(user, data.NewPassword)
               .then(() => {
-                showWarn()
+                showSuccess()
               })
               .then(() => {
                 signInWithEmailAndPassword(auth, user.email, data.NewPassword)
@@ -113,6 +114,7 @@ const PasswordForm = () => {
         <li>At least one lowercase</li>
         <li>At least one uppercase</li>
         <li>At least one numeric</li>
+        <li>At least one symbol</li>
         <li>Minimum 8 characters</li>
       </ul>
     </React.Fragment>
@@ -121,29 +123,59 @@ const PasswordForm = () => {
   /* Handle toasts */
   const toast = useRef(null)
 
-  const showInfo = () => {
+  const showSuccess = () => {
     toast.current.show({
-      severity: 'info',
-      summary: 'Success',
-      detail: 'Please check your email, we sent you a reset link.',
-      life: 3000,
-    })
-  }
-
-  const showWarn = () => {
-    toast.current.show({
-      severity: 'warn',
+      severity: 'success',
       summary: 'Success',
       detail: 'Password updated successfully',
       life: 3000,
     })
   }
 
+  const showInfo = (errorCode, errorMessage) => {
+    toast.current.show({
+      severity: 'info',
+      summary: 'Confirmation',
+      detail: 'Email with reset link has been sent. Check your spam if you miss it',
+      life: 3000,
+    })
+  }
   const showError = (errorCode, errorMessage) => {
     toast.current.show({
       severity: 'error',
       summary: errorCode,
       detail: errorMessage,
+      life: 3000,
+    })
+  }
+
+  const confirm1 = (event) => {
+    confirmPopup({
+      target: event.currentTarget,
+      message: 'Are you sure you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept,
+      reject,
+    })
+  }
+
+  const accept = () => {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        showInfo()
+      })
+      .catch((error) => {
+        const errorCode = error.code
+        const errorMessage = error.message
+        showError(errorCode, errorMessage)
+      })
+  }
+
+  const reject = () => {
+    toast.current.show({
+      severity: 'warn',
+      summary: 'Rejected',
+      detail: 'You have rejected',
       life: 3000,
     })
   }
@@ -290,18 +322,9 @@ const PasswordForm = () => {
           className="p-button-raised p-button-danger p-button-text"
           icon="pi pi-wrench"
           iconPos="right"
-          onClick={() => {
-            sendPasswordResetEmail(auth, email)
-              .then((res) => {
-                showInfo()
-              })
-              .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = error.message
-                showError(errorCode, errorMessage)
-              })
-          }}
+          onClick={confirm1}
         />
+        <ConfirmPopup />
       </div>
     </>
   )
