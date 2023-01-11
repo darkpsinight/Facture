@@ -1,16 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { InputText } from 'primereact/inputtext'
 import { classNames } from 'primereact/utils'
-import { InputTextarea } from 'primereact/inputtextarea'
 import { CardActions, CardContent, Collapse } from '@mui/material'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
+import { Editor } from 'primereact/editor'
 import ContactUsSettingsUpload from '../ContactUsSettingsUpload/ContactUsSettingsUpload'
 import { postContactUs } from '../../../../../Service/Settings/apiContactUs'
 import 'primeicons/primeicons.css'
@@ -31,7 +31,6 @@ const ExpandMore = styled((props) => {
 /* form validation */
 const schema = yup.object().shape({
   title: yup.string().required().min(10).max(60),
-  message: yup.string().required().min(15).max(5000),
 })
 
 const ContactUsSettingsForm = () => {
@@ -50,17 +49,30 @@ const ContactUsSettingsForm = () => {
     formState: { errors },
     handleSubmit,
     reset,
+    setValue,
+    watch,
   } = useForm({ resolver: yupResolver(schema) })
 
   const getFormErrorMessage = (title) => {
     return errors[title] && <small className="p-error">{errors[title].message}</small>
   }
 
+  useEffect(() => {
+    register('message', { required: true, minLength: 15, maxLength: 5000 })
+  }, [register])
+
+  const onEditorStateChange = (editorState) => {
+    setValue('message', editorState)
+  }
+
+  const editorContent = watch('message')
+
   const submitForm = (data) => {
     console.log('data: ', data)
+    console.log('data of message: ', data.message.htmlValue)
     let formData = new FormData()
     formData.append('title', data.title)
-    formData.append('message', data.message)
+    formData.append('message', data.message.htmlValue)
     if (selectedFile === true) {
       formData.append('file', data.file?.[0])
     }
@@ -140,21 +152,14 @@ const ContactUsSettingsForm = () => {
 
             <div className="field">
               <span className="p-float-label p-input-icon-right">
-                <i
-                  className={`pi ${errors.message ? 'pi-exclamation-circle' : 'pi-envelope'}`}
-                  style={{ color: errors.message ? 'red' : '' }}
-                />
-                <InputTextarea
-                  type="text"
+                <Editor
+                  style={{ height: '320px' }}
                   name="messsage"
                   placeholder="Additionnal info"
-                  autoResize
-                  {...register('message')}
-                  style={{ border: errors.message ? '1px solid red' : '' }}
+                  maxLength={5000}
+                  value={editorContent}
+                  onTextChange={onEditorStateChange}
                 />
-                <label htmlFor="message" className={classNames({ 'p-error': errors.name })}>
-                  Message<span style={{ color: 'red' }}>*</span>
-                </label>
               </span>
               {getFormErrorMessage('message')}
             </div>

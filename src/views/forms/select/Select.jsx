@@ -103,6 +103,7 @@ export default function Select() {
     rowsPerPageOptions: [5, 15, 50],
     rowsPerPage: 5,
     selectableRowsHideCheckboxes: true,
+    print: false,
   }
 
   const data = invoiceList.map((list) => ({
